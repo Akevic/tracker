@@ -32,14 +32,15 @@ class _HomePageState extends State<HomePage> {
     LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
     this.setState(() {
       marker = Marker(
-          markerId: MarkerId("home"),
-          position: latlng,
-          rotation: newLocalData.heading,
-          draggable: false,
-          zIndex: 2,
-          flat: true,
-          anchor: Offset(0.5, 0.5),
-          icon: BitmapDescriptor.fromBytes(imageData));
+        markerId: MarkerId("home"),
+        position: latlng,
+        rotation: newLocalData.heading,
+        draggable: false,
+        zIndex: 2,
+        flat: true,
+        anchor: Offset(0.5, 0.5),
+        icon: BitmapDescriptor.fromBytes(imageData),
+      );
       circle = Circle(
           circleId: CircleId("car"),
           radius: newLocalData.accuracy,
@@ -57,6 +58,7 @@ class _HomePageState extends State<HomePage> {
       var location = await _locationTracker.getLocation();
 
       updateMarkerAndCircle(location, imageData);
+      print(location);
 
       if (_locationSubscription != null) {
         _locationSubscription.cancel();
@@ -97,8 +99,9 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: GoogleMap(
-        mapType: MapType.hybrid,
+        mapType: MapType.satellite,
         initialCameraPosition: initialLocation,
+        zoomControlsEnabled: false,
         markers: Set.of((marker != null) ? [marker] : []),
         circles: Set.of((circle != null) ? [circle] : []),
         onMapCreated: (GoogleMapController controller) {

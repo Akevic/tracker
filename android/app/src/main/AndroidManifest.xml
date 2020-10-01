@@ -3,8 +3,6 @@
    <application
         android:label="tracker"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBJdlu-_WMlT72Uy1FfejT-4gFhaqflZtE"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
