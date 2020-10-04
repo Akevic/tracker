@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../location_service.dart';
+import '../services/location_service.dart';
+import '../services/socket_service.dart';
+import '../main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,6 +12,14 @@ class HomePage extends StatefulWidget {
 LocationService locationService = LocationService();
 
 class _HomePageState extends State<HomePage> {
+  SocketService socketService = injector.get<SocketService>();
+  @override
+  void initState() {
+    socketService.createSocketConnection();
+    print('inited');
+    super.initState();
+  }
+
   @override
   void dispose() {
     if (locationService.locationSubscription != null) {
