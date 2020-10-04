@@ -1,4 +1,7 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import './location_service.dart';
+
+LocationService locationService = LocationService();
 
 class SocketService {
   IO.Socket socket;
@@ -8,7 +11,15 @@ class SocketService {
       'transports': ['websocket'],
     });
 
-    this.socket.on("connect", (_) => print('Connected'));
+    // * send location to socket
+    this.socket.on("connect", (_) async {
+      print('Connected');
+      print(await locationService.getLocation());
+      var location = await locationService.getLocation();
+      for (var item in location) {
+        this.socket.emit('location', item);
+      }
+    });
     this.socket.on("disconnect", (_) => print('Disconnected'));
   }
 }

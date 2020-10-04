@@ -47,12 +47,20 @@ class LocationService {
     });
   }
 
+  Future<List> getLocation() async {
+    var location = await locationTracker.getLocation();
+    return [
+      location.latitude,
+      location.longitude,
+    ];
+  }
+
   // * context, this
   void getCurrentLocation(ctx, object) async {
     try {
       Uint8List imageData = await getMarker(ctx);
+      // * get location from socket
       var location = await locationTracker.getLocation();
-      print(location);
 
       updateMarkerAndCircle(location, imageData, object);
 
